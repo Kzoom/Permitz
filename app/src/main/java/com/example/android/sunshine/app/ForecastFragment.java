@@ -229,7 +229,9 @@ public class ForecastFragment extends Fragment {
 
                 //URL url = new URL("http://api.openweathermap.org/data/2.5/forecast/daily?q=94043&mode=json&units=metric&cnt=7");
 
-                Uri.Builder builder = new Uri.Builder();
+                // 2/11/15 ksw...my pass at URL building, which worked.
+                // 2/17/15 ksw...But theirs is more robust in the long run, so change to it
+               /* Uri.Builder builder = new Uri.Builder();
                 builder.scheme("http")
                         .authority("api.openweathermap.org")
                         .appendPath("data")
@@ -243,26 +245,30 @@ public class ForecastFragment extends Fragment {
 
                 URL url = new URL(builder.build().toString());
                 Log.v(LOG_TAG, "Build URL: " + url.toString());
+                */
 
-                // ksw...alt method from stackoverflow & the udacity class. More flexible in long run. Clean up later
-                /*final String FORECAST_BASE_URL = "http://api.example.org/data/2.5/forecast/daily?";
+                // 2/11/15 ksw...alt method from stackoverflow & the udacity class. More flexible in long run. Clean up later
+                //2/17/15 ksw...changed to use their method
+                final String FORECAST_BASE_URL = "http://api.openweathermap.org/data/2.5/forecast/daily?";
                 final String QUERY_PARAM = "q";
                 final String FORMAT_PARAM = "mode";
                 final String UNITS_PARAM = "units";
                 final String DAYS_PARAM = "cnt";
 
-                You can declare all this the above way or even inside the Uri.parse() and appendQueryParameter()
+                //You can declare all this the above way or even inside the Uri.parse() and appendQueryParameter()
 
                 Uri builtUri = Uri.parse(FORECAST_BASE_URL).buildUpon()
                         .appendQueryParameter(QUERY_PARAM, params[0])
                         .appendQueryParameter(FORMAT_PARAM, "json")
                         .appendQueryParameter(UNITS_PARAM, "metric")
-                        .appendQueryParameter(DAYS_PARAM, Integer.toString(7)).build();
+                        .appendQueryParameter(DAYS_PARAM, Integer.toString(7))
+                        .build();
 
-                At last
+                //At last
 
                 URL url = new URL(builtUri.toString());
-                */
+                Log.v(LOG_TAG, "Build URL: " + url.toString());
+
 
 
                 // Create the request to OpenWeatherMap, and open the connection
