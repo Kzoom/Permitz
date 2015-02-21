@@ -1,8 +1,11 @@
 package com.example.android.sunshine.app;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,6 +14,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -26,9 +30,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
 
 /**
  * Created by Kelley on 2/11/2015.
@@ -67,8 +69,15 @@ public class ForecastFragment extends Fragment {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_refresh) {
-            FetchWeatherTask weatherTask = new FetchWeatherTask();
-            weatherTask.execute("94043");
+              //2/19/15 ksw...refactor, move this functionality to updateWeather() method
+//            FetchWeatherTask weatherTask = new FetchWeatherTask();
+//            //weatherTask.execute("94043");
+//            SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
+//            String theLocation = sharedPref.getString(getString(R.string.pref_location_key), getString(R.string.pref_location_default));
+//            weatherTask.execute(theLocation);
+
+            updateWeather();
+
             return true;
         }
 
@@ -79,34 +88,61 @@ public class ForecastFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
         // dummy data
-        String[] forecastArray = {
-                "Today - Sunny - 72 / 65",
-                "Tomorrow - Sunny - 74 / 66",
-                "Weds - Cloudy - 72 / 65",
-                "Thurs - Drizzle - 70 / 56",
-                "Fri - Sunny - 74 / 66",
-                "Sat - Foggy - 70 / 60",
-                "Sun - Rain of Toads - 74 / 66"
-        };
+//        String[] forecastArray = {
+//                "Today - Sunny - 72 / 65",
+//                "Tomorrow - Sunny - 74 / 66",
+//                "Weds - Cloudy - 72 / 65",
+//                "Thurs - Drizzle - 70 / 56",
+//                "Fri - Sunny - 74 / 66",
+//                "Sat - Foggy - 70 / 60",
+//                "Sun - Rain of Toads - 74 / 66"
+//        };
         //dummy data, continued
-        //OpenWeatherMap APPID = b50370d08a32b50b598912ceb9c41c63
-        //http://api.openweathermap.org/data/2.5/forecast/daily?q=90291,USA&mode=json&units=metric&cnt=7
-        List<String> weekForecast = new ArrayList<String>(
-                Arrays.asList(forecastArray));
+        ////OpenWeatherMap APPID = b50370d08a32b50b598912ceb9c41c63
+        ////http://api.openweathermap.org/data/2.5/forecast/daily?q=90291,USA&mode=json&units=metric&cnt=7
+        //List<String> weekForecast = new ArrayList<String>(Arrays.asList(forecastArray));
 
         myForecastAdapter = new ArrayAdapter<String>(
                 getActivity(),  // the current context (this fragment's parent activity
                 R.layout.list_item_forecast,  // ID of list item layout
                 R.id.list_item_forecast_textview,  // ID of textview to be populated
-                weekForecast  // faked data
+                //weekForecast  // faked data
+                new ArrayList<String>()
         );
 
         //View rootview is the root of the fragment_main, inflated above
         ListView mylistView = (ListView) rootView.findViewById(R.id.listview_forecast);
         mylistView.setAdapter(myForecastAdapter);
 
+        //2/17/15 ksw...start of lesson 3
+        mylistView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //ksw...temp toast from Android docs doesn't work, ??getApplicationContext()??
+                // this is from their example
+                String forecast = myForecastAdapter.getItem(position);
+                //Toast.makeText(getActivity(), forecast, Toast.LENGTH_SHORT).show();
+
+                Intent displayIntent = new Intent(getActivity(), DetailActivity.class).putExtra(Intent.EXTRA_TEXT, forecast);
+                startActivity(displayIntent);
+            }
+        });
 
         return rootView;
+    }
+
+    private void updateWeather(){
+        FetchWeatherTask weatherTask = new FetchWeatherTask();
+        //weatherTask.execute("94043");
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        String theLocation = sharedPref.getString(getString(R.string.pref_location_key), getString(R.string.pref_location_default));
+        weatherTask.execute(theLocation);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        updateWeather();
     }
 
     public class FetchWeatherTask extends AsyncTask<String, Void, String[]> {
@@ -130,9 +166,19 @@ public class ForecastFragment extends Fragment {
          * Prepare the weather high/lows for presentation.
          */
         private String formatHighLows(double high, double low) {
-        // For presentation, assume the user doesn't care about tenths of a degree.
+            // For presentation, assume the user doesn't care about tenths of a degree.
             long roundedHigh = Math.round(high);
             long roundedLow = Math.round(low);
+
+            //2/19/15 ksw...convert temperatures per preferred units
+            SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
+            String units = sharedPref.getString(getString(R.string.unit_key), getString(R.string.unit_default));
+            Log.v("sharedPref", "units: " + units);
+
+            if (units.equals("F")){
+                roundedHigh = Math.round((high * 9/5) + 32);
+                roundedLow = Math.round((high * 9/5) + 32);
+            }
 
             String highLowStr = roundedHigh + "/" + roundedLow;
             return highLowStr;

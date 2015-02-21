@@ -6,5 +6,24 @@
     <string name="action_settings">Settings</string>
     <!-- ksw...added Refresh menu item for debugging only -->
     <string name="action_refresh" translatable="false">Refresh</string>
+    <string name="title_activity_detail">DetailActivity</string>
+    <string name="title_activity_settings">Settings</string>
+
+    <!-- 2/18/15 ksw...Settings -->
+    <!-- Label for Location pref [CHAR LIMIT=30] -->
+    <string name="pref_location_label">Location</string>
+    <!-- Key for Location pref [CHAR LIMIT=NONE] -->
+    <string name="pref_location_key" translatable="false">location</string>
+    <!-- Default ZIP code for Location pref [CHAR LIMIT=NONE] -->
+    <string name="pref_location_default" translatable="false">94043</string>
+
+    <!-- Label for Temperature Units Pref [CHAR LIMIT=30] -->
+    <string name="unit_label">Temperature Units</string>
+    <!-- Temperature Units [CHAR LIMIT=NONE] -->
+    <string name="unit_key" translatable="false">units</string>
+    <!-- Default Temperature Units [CHAR LIMIT=NONE] -->
+    <string name="unit_default">C</string>
+
+
 
 </resources>
