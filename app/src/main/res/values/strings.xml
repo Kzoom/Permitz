@@ -24,6 +24,9 @@
     <!-- Default Temperature Units [CHAR LIMIT=NONE] -->
     <string name="unit_default">C</string>
 
+    <!-- -->
+    <string name="action_map">Map Location</string>
+
 
 
 </resources>
