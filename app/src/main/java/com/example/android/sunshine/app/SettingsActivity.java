@@ -8,7 +8,6 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
-import android.util.Log;
 
 /**
  * A {@link PreferenceActivity} that presents a set of application settings.
@@ -20,6 +19,7 @@ import android.util.Log;
  */
 public class SettingsActivity extends PreferenceActivity
         implements Preference.OnPreferenceChangeListener {
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,10 +57,10 @@ public class SettingsActivity extends PreferenceActivity
             // the preference's 'entries' list (since they have separate labels/values).
             ListPreference listPreference = (ListPreference) preference;
             int prefIndex = listPreference.findIndexOfValue(stringValue);
-            Log.v("listPreference", "prefIndex: " + Integer.toString(prefIndex));
+            //Log.v("listPreference", "prefIndex: " + Integer.toString(prefIndex));
             if (prefIndex >= 0) {
-                Log.v("listPreference", "getEntries: " + listPreference.getEntries()[prefIndex]);
-                Log.v("listPreference", "getEntryValues: " + listPreference.getEntryValues()[prefIndex]);
+                //Log.v("listPreference", "getEntries: " + listPreference.getEntries()[prefIndex]);
+                //Log.v("listPreference", "getEntryValues: " + listPreference.getEntryValues()[prefIndex]);
                 preference.setSummary(listPreference.getEntries()[prefIndex]);
             }
         } else {

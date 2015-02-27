@@ -4,6 +4,13 @@
     <string name="app_name">"Sunshine "</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+
+    <!-- ksw -->
+    <string name="action_map">Map Location</string>
+
+    <!-- ksw -->
+    <string name="action_share">Share</string>
+
     <!-- ksw...added Refresh menu item for debugging only -->
     <string name="action_refresh" translatable="false">Refresh</string>
     <string name="title_activity_detail">DetailActivity</string>
@@ -24,8 +31,6 @@
     <!-- Default Temperature Units [CHAR LIMIT=NONE] -->
     <string name="unit_default">C</string>
 
-    <!-- -->
-    <string name="action_map">Map Location</string>
 
 
 

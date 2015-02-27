@@ -32,6 +32,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+
+
 /**
  * Created by Kelley on 2/11/2015.
  * moved from MainActivity
@@ -58,6 +60,7 @@ public class ForecastFragment extends Fragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         // Inflate the menu; this adds items to the action bar if it is present.
         inflater.inflate(R.menu.forecastfragment, menu);
+
     }
 
     @Override
@@ -83,21 +86,12 @@ public class ForecastFragment extends Fragment {
 
         return super.onOptionsItemSelected(item);
     }
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-        // dummy data
-//        String[] forecastArray = {
-//                "Today - Sunny - 72 / 65",
-//                "Tomorrow - Sunny - 74 / 66",
-//                "Weds - Cloudy - 72 / 65",
-//                "Thurs - Drizzle - 70 / 56",
-//                "Fri - Sunny - 74 / 66",
-//                "Sat - Foggy - 70 / 60",
-//                "Sun - Rain of Toads - 74 / 66"
-//        };
-        //dummy data, continued
+
         ////OpenWeatherMap APPID = b50370d08a32b50b598912ceb9c41c63
         ////http://api.openweathermap.org/data/2.5/forecast/daily?q=90291,USA&mode=json&units=metric&cnt=7
         //List<String> weekForecast = new ArrayList<String>(Arrays.asList(forecastArray));
@@ -110,14 +104,17 @@ public class ForecastFragment extends Fragment {
                 new ArrayList<String>()
         );
 
+        View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+
         //View rootview is the root of the fragment_main, inflated above
         ListView mylistView = (ListView) rootView.findViewById(R.id.listview_forecast);
         mylistView.setAdapter(myForecastAdapter);
 
         //2/17/15 ksw...start of lesson 3
         mylistView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 //ksw...temp toast from Android docs doesn't work, ??getApplicationContext()??
                 // this is from their example
                 String forecast = myForecastAdapter.getItem(position);
@@ -305,9 +302,9 @@ public class ForecastFragment extends Fragment {
 
                 Uri builtUri = Uri.parse(FORECAST_BASE_URL).buildUpon()
                         .appendQueryParameter(QUERY_PARAM, params[0])
-                        .appendQueryParameter(FORMAT_PARAM, "json")
-                        .appendQueryParameter(UNITS_PARAM, "metric")
-                        .appendQueryParameter(DAYS_PARAM, Integer.toString(7))
+                        .appendQueryParameter(FORMAT_PARAM, format)
+                        .appendQueryParameter(UNITS_PARAM, units)
+                        .appendQueryParameter(DAYS_PARAM, Integer.toString(numDays))
                         .build();
 
                 //At last

@@ -13,6 +13,8 @@ import android.view.MenuItem;
 
 public class MainActivity extends ActionBarActivity {
 
+    private final String LOG_TAG = MainActivity.class.getSimpleName();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,16 +60,18 @@ public class MainActivity extends ActionBarActivity {
         String location = sharedPref.getString(
                getString(R.string.pref_location_key),
                getString(R.string.pref_location_default));
-        Log.v("openPreferredLocationOnMap", "Location: " + location);
+        Log.v(LOG_TAG, "Location: " + location);
 
 
         Uri mapLocationUri = Uri.parse("geo:0,0").buildUpon().appendQueryParameter("q", location).build();
-        Intent intent = new Intent(Intent.ACTION_VIEW, mapLocationUri);
-        //intent.setData(mapLocation);
+        Intent intent = new Intent(Intent.ACTION_VIEW); //, mapLocationUri); ksw...2/26/15 chg'd to match theirs
+        intent.setData(mapLocationUri);  // 2/26/15 ksw...uncommented to match their code
 
         if (intent.resolveActivity(getPackageManager()) != null ) {
             startActivity(intent);
 
+        } else {
+            Log.d(LOG_TAG, "Couldn't call " + location + ", no receiving apps installed!");
         }
 
 
