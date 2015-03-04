@@ -1,0 +1,42 @@
+https://data.lacity.org/resource/yv23-pmwf.json
+
+To filter the dataset to only return records containing a specified value for issue_date simply add a URL parameter to your URL with issue_date as the key and your specified value. For example:
+https://data.lacity.org/resource/yv23-pmwf.json?issue_date=2013-05-23T00:00:00 
+
+To filter the dataset to only return records containing a specified value for zip_code simply add a URL parameter to your URL with zip_code as the key and your specified value. For example:
+https://data.lacity.org/resource/yv23-pmwf.json?zip_code=91352 
+
+
+https://data.lacity.org/resource/yv23-pmwf.json?$where=issue_date > 2015-01-31T00:00:00 AND issue_date < 2015-03-01T00:00:00 
+
+https://data.lacity.org/resource/yv23-pmwf.json?$where=zip_code = 90291   << this works
+https://data.lacity.org/resource/yv23-pmwf.json?$where=issue_date = 2015-02-27T00%3A00%3A00 << this doesn't ??
+
+https://data.lacity.org/resource/yv23-pmwf.json?$where=issue_date%20%3E%3D%20%272015-02-25T00%3A00%3A00%27%20AND%20issue_date%20%3C%20%272015-02-28T00%3A00%3A00%27
+
+%20%3E%3D%20%272015-02-25T00%3A00%3A00%27%20
+space > = space '2015-02-25T00:00:00'
+
+
+https://data.lacity.org/resource/yv23-pmwf.json?$where=issue_date >= '2015-02-25T00:00:00'  >>>works      %20AND%20issue_date%20%3C%20%272015-02-28T00%3A00%3A00%27
+https://data.lacity.org/resource/yv23-pmwf.json?$where=issue_date%20%3E=%20%272015-01-15T00:00:00%27%20AND%20issue_date%20%3C=%20%272015-01-16T00:00:00%27 
+
+
+This works:
+https://data.lacity.org/resource/yv23-pmwf.json?$select=zip_code, issue_date, address_start, address_end, street_name, street_suffix, work_description, valuation&$where=issue_date >= '2015-02-27T00:00:00' AND zip_code = 90291
+
+
+>>Fields<< They don't come back in order rquested. _start usually = _end. _date always ends in T00:00:00. valuation does not have commas.
+zip_code
+issue_date
+address_start
+address_end 
+street_name
+street_suffix
+work_description
+valuation
+location_1
+
+
+See 'within_circle()' for lat/lon "location" rows within given meter radius of given lat/lon.
+

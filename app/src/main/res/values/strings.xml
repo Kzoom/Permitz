@@ -1,18 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">"Sunshine "</string>
+    <string name="app_name">"Permitz "</string>
     <string name="hello_world">Hello world!</string>
+
     <string name="action_settings">Settings</string>
-
-    <!-- ksw -->
     <string name="action_map">Map Location</string>
-
-    <!-- ksw -->
     <string name="action_share">Share</string>
-
     <!-- ksw...added Refresh menu item for debugging only -->
     <string name="action_refresh" translatable="false">Refresh</string>
+
     <string name="title_activity_detail">DetailActivity</string>
     <string name="title_activity_settings">Settings</string>
 
