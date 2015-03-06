@@ -25,6 +25,32 @@ https://data.lacity.org/resource/yv23-pmwf.json?$where=issue_date%20%3E=%20%2720
 This works:
 https://data.lacity.org/resource/yv23-pmwf.json?$select=zip_code, issue_date, address_start, address_end, street_name, street_suffix, work_description, valuation&$where=issue_date >= '2015-02-27T00:00:00' AND zip_code = 90291
 
+This was built w/ Uri and doesn't work??
+https://data.lacity.org/resource/yv23-pmwf.json?$select=zip_code, issue_date, address_start, address_end, street_name, street_suffix, work_description, valuation&$where=issue_date >= '2015-02-27T00:00:00' AND zip_code = 90291
+https://data.lacity.org/resource/yv23-pmwf.json?$select=zip_code,issue_date,address_start,address_end,street_name,street_suffix,work_description,valuation&$where=issue_date>='2015-02-27T00:00:00'&zip_code=90291
+This is built w/ Mike's suggested code
+http://data.lacity.org/resource/yv23-pmwf.json?%24select=zip_code%2C%20issue_date%2C%20address_start%2C%20address_end%2C%20street_name%2C%20street_suffix%2C%20work_description%2C%20valuation&%24where=%24where
+
+
+
+http://data.lacity.org/resource/yv23-pmwf.json?$select=zip_code,issue_date,address_start,address_end,street_name,street_suffix,work_description,valuation&%24where%3Dissue_date%3E='2015-02-27T00%3A00%3A00'&zip_code=94043
+
+
+
+
+
+This was the Sunshine URL for weather
+http://api.openweathermap.org/data/2.5/forecast/daily?q=94043&mode=json&units=metric&cnt=7
+
+
+
+
+
+
+
+
+
+
 
 >>Fields<< They don't come back in order rquested. _start usually = _end. _date always ends in T00:00:00. valuation does not have commas.
 zip_code
@@ -36,6 +62,9 @@ street_suffix
 work_description
 valuation
 location_1
+
+
+&$order=issue_date DESC  (To have latest listed first)
 
 
 See 'within_circle()' for lat/lon "location" rows within given meter radius of given lat/lon.
